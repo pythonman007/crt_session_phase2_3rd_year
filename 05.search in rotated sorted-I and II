@@ -1,0 +1,46 @@
+class Solution:
+    def search(self, arr, key):
+        # code here
+        low = 0 
+        high = len(arr)-1 
+        ans = -1 
+        while(low<=high):
+            mid = (low+high)//2 
+            if(arr[mid]==key):
+                return mid 
+            elif(arr[low]<=arr[mid]): # first half is sorted 
+                if(arr[low]<=key<=arr[mid]):
+                    high = mid-1
+                else:
+                    low = mid+1 
+            elif(arr[mid]<=arr[high]): # second half is sorted 
+                if(arr[mid]<=key<=arr[high]):
+                    low = mid+1 
+                else:
+                    high = mid-1 
+        return -1 
+2-nd part code:-
+class Solution:
+    def search(self, arr, key):
+        # code here
+        low = 0 
+        high = len(arr)-1 
+        ans = -1 
+        while(low<=high):
+            mid = (low+high)//2 
+            if(arr[mid]==key):
+                return True 
+            if(arr[low]==arr[mid]==arr[high]):
+                low+=1 
+                high-=1 
+            elif(arr[low]<=arr[mid]): # first half is sorted 
+                if(arr[low]<=key<=arr[mid]):
+                    high = mid-1
+                else:
+                    low = mid+1 
+            elif(arr[mid]<=arr[high]): # second half is sorted 
+                if(arr[mid]<=key<=arr[high]):
+                    low = mid+1 
+                else:
+                    high = mid-1 
+        return False 
