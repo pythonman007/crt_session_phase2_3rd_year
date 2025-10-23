@@ -1,0 +1,25 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import defaultdict,deque 
+class Solution:
+    def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
+        q = deque([(root,0,0)]) # (0,0) - vertical,level (for root vertical and level will be at 0,0).
+        d = defaultdict(lambda : defaultdict(list))  # {vertical:{level:[node]}} 
+        while(len(q)>0):
+            node,vertical,level = q.popleft() 
+            if(node.left):
+                q.append((node.left,vertical-1,level+1)) 
+            if(node.right):
+                q.append((node.right,vertical+1,level+1)) 
+            d[vertical][level].append(node.val)
+        ans = [] 
+        for i in sorted(d): # sorted(d) will give only keys for you . for outer loop you get keys for outer dict
+            col = []
+            for j in sorted(d[i]): #for this you get keys for inner dict 
+                col.extend(sorted(d[i][j])) 
+            ans.append(col) 
+        return ans 
