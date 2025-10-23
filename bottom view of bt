@@ -1,0 +1,24 @@
+'''
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.right = None
+        self.left = None
+'''
+from collections import deque
+class Solution:
+    def bottomView(self, root):
+        # code here
+        q = deque([(root,0)]) 
+        d = {} 
+        while(len(q)>0):
+            node,vertical = q.popleft() 
+            if(node.left):
+                q.append((node.left,vertical-1)) 
+            if(node.right):
+                q.append((node.right,vertical+1)) 
+            d[vertical] = node.data
+        ans = [] 
+        for i in sorted(d):
+            ans.append(d[i]) 
+        return ans 
