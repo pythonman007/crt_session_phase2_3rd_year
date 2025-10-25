@@ -1,0 +1,50 @@
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        n = len(matrix) # no of rows  # 4 
+        m = len(matrix[0]) # no of cols # 5 
+        preMatrix = [] 
+        for i in range(0,n):
+            lst = [0]*m 
+            preMatrix.append(lst)
+        for j in range(0,m):
+            preMatrix[0][j] = int(matrix[0][j])  
+        for i in range(1,n): 
+            for j in range(0,m):
+                if(matrix[i][j] == '1'):
+                    preMatrix[i][j] = preMatrix[i-1][j]+int(matrix[i][j])
+        area = 0 
+        maxArea = 0
+        for heights in preMatrix:
+            def find_nse(heights):
+                n = len(heights) 
+                stack = [] 
+                ans = [0]*n 
+                for i in range(n-1,-1,-1):
+                    while(len(stack)!=0 and heights[stack[-1]]>=heights[i]):
+                        stack.pop()
+                    if(len(stack) == 0):
+                        ans[i] = len(heights) 
+                    else:
+                        ans[i] = stack[-1] 
+                    stack.append(i)
+                return ans 
+            def find_pse(heights):
+                n = len(heights) 
+                stack = [] 
+                ans = [0]*n 
+                for i in range(0,n): 
+                    while(len(stack)!=0 and heights[stack[-1]]>=heights[i]):
+                        stack.pop()
+                    if(len(stack) == 0):
+                        ans[i] = -1 
+                    else:
+                        ans[i] = stack[-1]
+                    stack.append(i)
+                return ans 
+            nse = find_nse(heights) 
+            pse = find_pse(heights) 
+            for i in range(0,len(heights)):
+                area = heights[i]*(nse[i]-pse[i]-1) 
+                maxArea = max(area,maxArea) 
+        return maxArea
+            
