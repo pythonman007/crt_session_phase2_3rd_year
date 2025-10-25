@@ -1,0 +1,23 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        def dfs(i,j,grid,vis,n,m):
+            for r,c in [[-1,0],[1,0],[0,-1],[0,1]]:
+                cr = r+i 
+                cc = c+j 
+                if(cr>=0 and cr<n and cc>=0 and cc<m and grid[cr][cc]=='1' and vis[cr][cc]==0):
+                    vis[cr][cc] = 1 
+                    dfs(cr,cc,grid,vis,n,m) 
+        n = len(grid) 
+        m = len(grid[0]) 
+        vis = [] 
+        for i in range(n):
+            lst = [0]*m 
+            vis.append(lst) 
+        noOfIslands = 0 
+        for i in range(0,n):
+            for j in range(0,m):
+                if(grid[i][j] == '1' and vis[i][j]==0):
+                    vis[i][j] = 1 
+                    dfs(i,j,grid,vis,n,m) 
+                    noOfIslands+=1 
+        return noOfIslands
