@@ -1,0 +1,18 @@
+from collections import deque 
+class Solution:
+    # Function to return Breadth First Search Traversal of given graph.
+    def bfs(self, adj):
+        # code here
+        vis = [0]*len(adj) 
+        start = 0 
+        vis[start] = 1 
+        ans = []                                  
+        q = deque([start])
+        while(len(q)>0):
+            node = q.popleft()  
+            for i in adj[node]:
+                if(vis[i] == 0):
+                    vis[i] = 1 
+                    q.append(i)            
+            ans.append(node) 
+        return ans
